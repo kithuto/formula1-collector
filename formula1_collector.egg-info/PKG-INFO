@@ -1,0 +1,49 @@
+Metadata-Version: 1.0
+Name: formula1-collector
+Version: 0.3.1
+Summary: A library for realtime formula 1 data
+Home-page: UNKNOWN
+Author: Ignasi Rovira
+Author-email: UNKNOWN
+License: MIT
+Description: This library gives realtime data of the fromula 1 world.
+        
+        Change Log
+        ==========
+        
+        0.1.0 (2/5/2022)
+        ----------------
+        - First release
+        
+        0.1.1 (2/5/2022)
+        ----------------
+        - No changes
+        
+        0.1.2 (3/5/2022)
+        ----------------
+        - CHANGELOG file correction
+        
+        0.1.3 (3/5/2022)
+        ----------------
+        - __init__.py correction
+        
+        0.1.4 (3/5/2022)
+        ----------------
+        - __init__.py final correction
+        
+        0.1.5 (3/5/2022)
+        ----------------
+        - Package running with no issues
+        
+        0.2.0 (4/5/2022)
+        ----------------
+        - New parameters added to table outputs and some parameters renamed
+        
+        0.3.0 (4/5/2022)
+        ----------------
+        - New function for the driver info
+        
+        0.3.1 (6/5/2022)
+        ----------------
+        - Now the function get_driver_info can send special chars
+Platform: UNKNOWN
