@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
    name='formula1_collector',
-   version='0.3.1',
+   version='0.4.0',
    author='Ignasi Rovira',
    packages=['formula1_collector'],
    license='MIT',
