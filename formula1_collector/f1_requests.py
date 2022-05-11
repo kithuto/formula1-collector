@@ -298,18 +298,19 @@ def get_training_results(race_num, training_num, year):
     return table[0][['race_id', 'train_num', 'Pos', 'Driver', 'Car', 'Time', 'Gap', 'Laps']]
 
 
-def race_has_sprint(race_num, year):
+def race_has_sprint(race_num: int) -> bool:
     '''
-    param: race_num and year
+    param: race_num
     
     returns true if a race has sprint stage
     
     return: Boolean
     
     '''
-    url = get_race_url(race_num, year)
-    pool_name, _ = get_practice_url(url, 3, True)
-    if pool_name == 'Error':
+    web = get('http://ergast.com/api/f1/current')
+    root = ET.XML(web.text)
+    table = list(root)
+    if table[0][race_num-1][5].tag.split('}')[1] == 'Qualifying':
         return True
     return False
 
@@ -324,7 +325,7 @@ def get_sprint_results(race_num, year):
     '''
     url = get_race_url(race_num, year)
     
-    if race_has_sprint(race_num, year):
+    if race_has_sprint(race_num):
         web = get(url)
         soup = BeautifulSoup(web.text, 'lxml')
         items = soup.find_all(class_='side-nav-item-link')
