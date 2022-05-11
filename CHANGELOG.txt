@@ -5,22 +5,6 @@ Change Log
 ----------------
 - First release
 
-0.1.1 (2/5/2022)
-----------------
-- No changes
-
-0.1.2 (3/5/2022)
-----------------
-- CHANGELOG file correction
-
-0.1.3 (3/5/2022)
-----------------
-- __init__.py correction
-
-0.1.4 (3/5/2022)
-----------------
-- __init__.py final correction
-
 0.1.5 (3/5/2022)
 ----------------
 - Package running with no issues
@@ -38,5 +22,5 @@ Change Log
 - Now the function get_driver_info can send special chars
 
 0.4.0 (11/5/2022)
-----------------
-- Now the function race_has_sprint returns for future races
+-----------------
+- Now the function race_has_sprint returns data for future races
