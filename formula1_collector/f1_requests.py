@@ -2,7 +2,7 @@ import pandas as pd
 import xml.etree.ElementTree as ET
 from requests import get
 from bs4 import BeautifulSoup
-from .utils import first_2_words, get_race_url, get_practice_url, correct_string
+from .utils import first_2_words, get_race_url, correct_string
 
 
 def get_drivers(year):
@@ -261,7 +261,8 @@ def get_qualifying_results(race_num, year):
     returns: name of the fase and a pandas dataframe ['race_id', 'Pos', 'Driver', 'Car', 'Q1', 'Q2', 'Q3', 'Laps']
     '''
     url = get_race_url(race_num, year)
-    _, url = get_practice_url(url, 4)
+    splitted_url = url.split('/')[:-1] + ['qualifying.html']
+    url = '/'.join(splitted_url)
     
     table = pd.read_html(url)
     table[0]['Driver'] = table[0]['Driver'].apply(first_2_words)
@@ -270,32 +271,6 @@ def get_qualifying_results(race_num, year):
     table[0].insert(0, column = 'race_id', value = race_id)
     
     return table[0][['race_id', 'Pos', 'Driver', 'Car', 'Q1', 'Q2', 'Q3', 'Laps']]
-
-
-def get_training_results(race_num, training_num, year):
-    '''
-    params: race_num, training_num (1, 2 or 3), year
-    
-    returns the results for a specific training practice before the race
-    
-    returns: pandas dataframe ['race_id', 'train_num', 'Pos', 'Driver', 'Car', 'Time', 'Gap', 'Laps']
-    '''
-    url = get_race_url(race_num, year)
-    pool_name, url = get_practice_url(url, training_num, True)
-    
-    if pool_name == 'Error':
-        return None
-    
-    table = pd.read_html(url)
-    table[0]['Driver'] = table[0]['Driver'].apply(first_2_words)
-    
-    race_id = [race_num]*table[0].shape[0]
-    table[0].insert(0, column = 'race_id', value = race_id)
-    
-    train_num = [training_num]*table[0].shape[0]
-    table[0].insert(0, column = 'train_num', value = train_num)
-    
-    return table[0][['race_id', 'train_num', 'Pos', 'Driver', 'Car', 'Time', 'Gap', 'Laps']]
 
 
 def race_has_sprint(race_num: int) -> bool:
@@ -313,6 +288,33 @@ def race_has_sprint(race_num: int) -> bool:
     if table[0][race_num-1][5].tag.split('}')[1] == 'Qualifying':
         return True
     return False
+
+
+def get_training_results(race_num, training_num, year):
+    '''
+    params: race_num, training_num (1, 2 or 3), year
+    
+    returns the results for a specific training practice before the race
+    
+    returns: pandas dataframe ['race_id', 'train_num', 'Pos', 'Driver', 'Car', 'Time', 'Gap', 'Laps']
+    '''
+    url = get_race_url(race_num, year)
+    splitted_url = url.split('/')[:-1] + ['practice-'+str(training_num)+'.html']
+    url = '/'.join(splitted_url)
+    
+    if training_num == 3 and race_has_sprint(race_num):
+        return None
+    
+    table = pd.read_html(url)
+    table[0]['Driver'] = table[0]['Driver'].apply(first_2_words)
+    
+    race_id = [race_num]*table[0].shape[0]
+    table[0].insert(0, column = 'race_id', value = race_id)
+    
+    train_num = [training_num]*table[0].shape[0]
+    table[0].insert(1, column = 'train_num', value = train_num)
+    
+    return table[0][['race_id', 'train_num', 'Pos', 'Driver', 'Car', 'Time', 'Gap', 'Laps']]
 
 
 def get_sprint_results(race_num, year):
