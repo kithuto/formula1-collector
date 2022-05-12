@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
    name='formula1_collector',
-   version='0.4.1',
+   version='0.4.2',
    author='Ignasi Rovira',
    url='https://github.com/kithuto/formula-1-collector',
    packages=['formula1_collector'],
@@ -13,5 +13,6 @@ setup(
        "pandas",
        "bs4",
        "lxml",
+       'html5lib',
    ],
 )

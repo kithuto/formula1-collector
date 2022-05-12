@@ -2,7 +2,7 @@ import pandas as pd
 import xml.etree.ElementTree as ET
 from requests import get
 from bs4 import BeautifulSoup
-from .utils import first_2_words, get_race_url, correct_string
+from .utils import first_2_words, get_race_url, correct_string, correct_table_data
 
 
 def get_drivers(year):
@@ -200,7 +200,14 @@ def get_starting_grid(race_num, year):
     splitted_url[-1] = 'starting-grid.html'
     url = '/'.join(splitted_url)
     
-    table = pd.read_html(url)
+    try:
+        table = pd.read_html(url)
+    except ValueError:
+        return None
+    
+    if not correct_table_data(url,'STARTING GRID'):
+        return None
+    
     table[0]['Driver'] = table[0]['Driver'].apply(first_2_words)
     
     race_id = [race_num]*table[0].shape[0]
@@ -219,7 +226,14 @@ def get_race_results(race_num, year):
     '''
     url = get_race_url(race_num, year)
     
-    table = pd.read_html(url)
+    try:
+        table = pd.read_html(url)
+    except ValueError:
+        return None
+    
+    if not correct_table_data(url,'RACE RESULT'):
+        return None
+    
     table[0]['Driver'] = table[0]['Driver'].apply(first_2_words)
     table[0].rename(columns = {'Time/Retired':'Time_Retired'}, inplace = True)
     
@@ -243,7 +257,14 @@ def get_fastest_lap(race_num, year):
     splitted_url[-1] = 'fastest-laps.html'
     url = '/'.join(splitted_url)
     
-    table_fastest_lap = pd.read_html(url)
+    try:
+        table_fastest_lap = pd.read_html(url)
+    except ValueError:
+        return None
+    
+    if not correct_table_data(url,'FASTEST LAPS'):
+        return None
+    
     table_fastest_lap[0].rename(columns = {'Time of day':'Time_of_day', 'Avg Speed':'Avg_Speed'}, inplace = True)
     
     race_id = [race_num]*table_fastest_lap[0].shape[0]
@@ -264,7 +285,14 @@ def get_qualifying_results(race_num, year):
     splitted_url = url.split('/')[:-1] + ['qualifying.html']
     url = '/'.join(splitted_url)
     
-    table = pd.read_html(url)
+    try:
+        table = pd.read_html(url)
+    except ValueError:
+        return None
+    
+    if not correct_table_data(url,'QUALIFYING'):
+        return None
+    
     table[0]['Driver'] = table[0]['Driver'].apply(first_2_words)
     
     race_id = [race_num]*table[0].shape[0]
@@ -305,7 +333,14 @@ def get_training_results(race_num, training_num, year):
     if training_num == 3 and race_has_sprint(race_num):
         return None
     
-    table = pd.read_html(url)
+    try:
+        table = pd.read_html(url)
+    except ValueError:
+        return None
+    
+    if not correct_table_data(url,'PRACTICE '+str(training_num)):
+        return None
+    
     table[0]['Driver'] = table[0]['Driver'].apply(first_2_words)
     
     race_id = [race_num]*table[0].shape[0]
@@ -333,7 +368,14 @@ def get_sprint_results(race_num, year):
         items = soup.find_all(class_='side-nav-item-link')
         url = 'https://www.formula1.com'+items[-5]['href']
         
-        table = pd.read_html(url)
+        try:
+            table = pd.read_html(url)
+        except ValueError:
+            return None
+        
+        if not correct_table_data(url,'SPRINT'):
+            return None
+        
         table[0]['Driver'] = table[0]['Driver'].apply(first_2_words)
         table[0].rename(columns = {'Time/Retired':'Time_Retired'}, inplace = True)
     

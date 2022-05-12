@@ -28,3 +28,7 @@ Change Log
 0.4.1 (12/5/2022)
 -----------------
 - Minor fixes and Optimizations in some of the functions
+
+0.4.2 (12/5/2022)
+-----------------
+-Fixed exceptions when the data doesn't exist applying further validations
