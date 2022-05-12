@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
    name='formula1_collector',
-   version='0.4.0',
+   version='0.4.1',
    author='Ignasi Rovira',
    url='https://github.com/kithuto/formula-1-collector',
    packages=['formula1_collector'],
