@@ -25,6 +25,6 @@ Change Log
 -----------------
 - Now the function race_has_sprint returns data for future races
 
-0.4.1 (11/5/2022)
+0.4.1 (12/5/2022)
 -----------------
 - Minor fixes and Optimizations in some of the functions
