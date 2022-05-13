@@ -32,3 +32,7 @@ Change Log
 0.4.2 (12/5/2022)
 -----------------
 -Fixed exceptions when the data doesn't exist applying further validations
+
+0.4.3 (13/5/2022)
+-----------------
+-Now functions returns an empty dataframe if there is no data

@@ -203,10 +203,10 @@ def get_starting_grid(race_num, year):
     try:
         table = pd.read_html(url)
     except ValueError:
-        return None
+        return pd.DataFrame()
     
     if not correct_table_data(url,'STARTING GRID'):
-        return None
+        return pd.DataFrame()
     
     table[0]['Driver'] = table[0]['Driver'].apply(first_2_words)
     
@@ -229,10 +229,10 @@ def get_race_results(race_num, year):
     try:
         table = pd.read_html(url)
     except ValueError:
-        return None
+        return pd.DataFrame()
     
     if not correct_table_data(url,'RACE RESULT'):
-        return None
+        return pd.DataFrame()
     
     table[0]['Driver'] = table[0]['Driver'].apply(first_2_words)
     table[0].rename(columns = {'Time/Retired':'Time_Retired'}, inplace = True)
@@ -260,10 +260,10 @@ def get_fastest_lap(race_num, year):
     try:
         table_fastest_lap = pd.read_html(url)
     except ValueError:
-        return None
+        return pd.DataFrame()
     
     if not correct_table_data(url,'FASTEST LAPS'):
-        return None
+        return pd.DataFrame()
     
     table_fastest_lap[0].rename(columns = {'Time of day':'Time_of_day', 'Avg Speed':'Avg_Speed'}, inplace = True)
     
@@ -288,10 +288,10 @@ def get_qualifying_results(race_num, year):
     try:
         table = pd.read_html(url)
     except ValueError:
-        return None
+        return pd.DataFrame()
     
     if not correct_table_data(url,'QUALIFYING'):
-        return None
+        return pd.DataFrame()
     
     table[0]['Driver'] = table[0]['Driver'].apply(first_2_words)
     
@@ -331,15 +331,15 @@ def get_training_results(race_num, training_num, year):
     url = '/'.join(splitted_url)
     
     if training_num == 3 and race_has_sprint(race_num):
-        return None
+        return pd.DataFrame()
     
     try:
         table = pd.read_html(url)
     except ValueError:
-        return None
+        return pd.DataFrame()
     
     if not correct_table_data(url,'PRACTICE '+str(training_num)):
-        return None
+        return pd.DataFrame()
     
     table[0]['Driver'] = table[0]['Driver'].apply(first_2_words)
     
@@ -371,10 +371,10 @@ def get_sprint_results(race_num, year):
         try:
             table = pd.read_html(url)
         except ValueError:
-            return None
+            return pd.DataFrame()
         
         if not correct_table_data(url,'SPRINT'):
-            return None
+            return pd.DataFrame()
         
         table[0]['Driver'] = table[0]['Driver'].apply(first_2_words)
         table[0].rename(columns = {'Time/Retired':'Time_Retired'}, inplace = True)
@@ -384,4 +384,4 @@ def get_sprint_results(race_num, year):
         
         return table[0][['race_id', 'Pos', 'Driver', 'Car', 'Laps', 'Time_Retired', 'PTS']]
     
-    return None
+    return pd.DataFrame()
