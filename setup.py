@@ -4,7 +4,7 @@ setup(
    name='formula1_collector',
    version='0.4.3',
    author='Ignasi Rovira',
-   url='https://github.com/kithuto/formula-1-collector',
+   url='https://github.com/kithuto/formula1-collector',
    packages=['formula1_collector'],
    license='MIT',
    description='A library for realtime formula 1 data',
